@@ -13,3 +13,7 @@ kubectl delete -k /eks-workshop/manifests/modules/automation/controlplanes/cross
 kubectl wait --for=delete composition table.dynamodb.awsblueprints.io --timeout=600s > /dev/null
 
 eksctl delete iamserviceaccount --name carts-crossplane --namespace carts --cluster $EKS_CLUSTER_NAME -v 0 > /dev/null
+
+terraform -chdir="/eks-workshop/terraform" apply --var enable_upbound_aws_provider=false
+
+kubectl delete provider upbound-provider-family-aws

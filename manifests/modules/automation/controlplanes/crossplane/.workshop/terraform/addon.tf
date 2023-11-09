@@ -6,6 +6,12 @@ EOF
   }
 }
 
+variable "enable_upbound_aws_provider" {
+  type        = bool
+  description = "Installs the upbound aws provider"
+  default     = true
+}
+
 module "crossplane" {
   depends_on = [
     terraform_data.cluster
@@ -29,7 +35,7 @@ module "crossplane" {
 locals {
   crossplane_namespace = "crossplane-system"
   upbound_aws_provider = {
-    enable               = true
+    enable               = var.enable_upbound_aws_provider # defaults to true
     version              = "v0.40.0"
     controller_config    = "upbound-aws-controller-config"
     provider_config_name = "aws-provider-config" 
